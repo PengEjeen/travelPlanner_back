@@ -11,7 +11,7 @@ class DaySerializer(serializers.Serializer):
 
 
 class PlannerSerializer(serializers.ModelSerializer):
-    cells = DaySerializer(many=True, required=False, default=[])
+    cells = DaySerializer(many=True, required=False, default = [{'day': [{'status': 0, 'place_id': '', 'memo': ''}]}])
 
     class Meta:
         model = Planner

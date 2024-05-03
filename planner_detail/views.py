@@ -71,11 +71,10 @@ def update_Planner(request, planner_id):
 def delete_Planner(request, planner_id):
     try:
         planner = Planner.objects.get(planner_id=planner_id)
+        planner.delete()
+        return Response(status=201)
 
     except Planner.DoesNotExist:
         return Response(status=404)
-    
-    planner.delete()
-    return Response(status=404)
     
 
