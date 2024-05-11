@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+import rest_framework.authentication
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'planner_detail',
     'rest_framework', #Django REST Framework
+    'rest_framework.authtoken',
     'corsheaders',
 
 ]
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
 # REST Framework의 기본 인증 및 권한 설정
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
     #    'rest_framework.authentication.SessionAuthentication',
     #    'rest_framework.authentication.BasicAuthentication',
         # 필요에 따라 다른 인증 클래스 추가 가능
