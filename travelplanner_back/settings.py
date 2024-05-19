@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'planner_detail',
     'rest_framework', #Django REST Framework
+    'rest_framework.authtoken',
     'corsheaders',
 
 ]
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 # REST Framework의 기본 인증 및 권한 설정
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+    'rest_framework.authentication.TokenAuthentication',
     #    'rest_framework.authentication.SessionAuthentication',
     #    'rest_framework.authentication.BasicAuthentication',
         # 필요에 따라 다른 인증 클래스 추가 가능
