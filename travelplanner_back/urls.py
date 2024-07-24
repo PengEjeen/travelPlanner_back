@@ -10,6 +10,7 @@ urlpatterns = [
     path('planners/<str:planner_id>/', views.get_Planner, name='get_planner'),
     path('planners/<str:planner_id>/update/', views.update_Planner, name='update_planner'),
     path('planners/<str:planner_id>/delete/', views.delete_Planner, name='delete_planner'),
+    path('polls/', include('polls.urls'))
 
 
 ]
