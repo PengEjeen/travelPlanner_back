@@ -31,13 +31,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'common.apps.CommonConfig',
+    'planner_detail',
+    'googlectl',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'planner_detail',
     'rest_framework',  # Django REST Framework
     'rest_framework.authtoken',
     'corsheaders',
