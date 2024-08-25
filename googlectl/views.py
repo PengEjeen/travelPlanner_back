@@ -44,3 +44,14 @@ def getPlaceRoute(request):
         return Response(routes, status=200)
     else:
         return Response("Invalid address", status=400)
+
+@api_view(['GET'])
+def getPlacePhoto(request):
+    place_url = request.GET.get('place_url')
+
+    photo_bytes = getPlacePhotos(place_url)
+
+    if photo_bytes:
+        return Response(photo_bytes, status=200)
+    else:
+        return Response("Invalid url", status=400)

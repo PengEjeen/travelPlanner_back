@@ -104,4 +104,14 @@ def getPlaceRoutes(origin_text, destination_text):
     print(response.json()['routes'])
     return response.json()['routes']
 
+#get photo
+def getPlacePhotos(place_url):
+    import base64
+
+    url = f"https://places.googleapis.com/v1/{place_url}/media?maxHeightPx=400&maxWidthPx=400&key={API_KEY}"
+    response = requests.get(url)
+    photo_bytes = response.content
+    encoded_image = base64.b64encode(response.content).decode('utf-8')
+
+    return encoded_image
 
