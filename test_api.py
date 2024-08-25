@@ -2,7 +2,8 @@ import requests
 import json
 
 # 테스트 데이터 설정
-base_url = 'http://localhost:8000'  # API 서버의 기본 URL
+base_url = 'http://34.64.132.0/api'  # API 서버의 기본 URL
+#base_url = 'http://127.0.0.1:8000'
 planner_data = {'user_id': 'Test user', 'title': 'Planner'}
 
 # 플래너 생성 테스트
@@ -24,7 +25,7 @@ def test_get_planner(planner_id):
     assert response.json()['title'] == 'Test Planner'  # 응답 데이터의 title 필드 확인
 
 def test_update_planner(planner_id):
-    update_data = {'title': 'Updated Planner'}
+    update_data = {'title': '한국어 테스트'}
     url = f'{base_url}/planners/{planner_id}/update/'  # 업데이트할 플래너의 URL
     response = requests.put(url, json=update_data)  # PUT 요청을 보냄
 
@@ -46,4 +47,12 @@ def test_delete_planner(planner_id):
     else:
         print("failed: delete Planner")
 
-test_create_planner()
+#detail
+def test_placeDetail(place_id):
+    response = requests.get(f"{base_url}/googlemaps/placeDetails/?place_id={place_id}")
+    
+    print(response.status_code)
+    response_data = response.json()
+    print(response_data)
+
+test_placeDetail("ChIJQ2kZ0BZBezUR62P9J1qdarU")

@@ -11,7 +11,7 @@ client = Client(key=API_KEY)
 #address: String text 
 #return placePrediction with place info like placeid, text...
 def getPlaceGeom(address):        
-    location = client.gecode(address)
+    location = client.geocode(address)
     if location is not None:
         geometry = location[0]['geometry']['location']
         formatted_address = location[0]['formatted_address']
@@ -102,5 +102,6 @@ def getPlaceRoutes(origin_text, destination_text):
     # Print the response
     print(response.status_code)
     print(response.json()['routes'])
+    return response.json()['routes']
 
 

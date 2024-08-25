@@ -3,8 +3,8 @@ from .models import Planner
 
 class CellSerializer(serializers.Serializer):
     status = serializers.IntegerField(default=0)
-    place_id = serializers.CharField(default = "")
-    memo = serializers.CharField(default = "")
+    place_id = serializers.CharField(default = "", allow_blank=True)
+    memo = serializers.CharField(default = "", allow_blank=True)
 
 class DaySerializer(serializers.Serializer):
     day = CellSerializer(many=True)

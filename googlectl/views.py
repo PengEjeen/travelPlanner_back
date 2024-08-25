@@ -1,19 +1,22 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-import googlemapsctl
+from googlectl.googlemapsctl import *
 
 # Create your views here.
 
 #search near place
 #post feature 
 @api_view(['GET'])
-def searchNearPlace(request, address, keyword=None, category=None):
+def searchNearPlace(request):
     #get geom
-    geometry = googlemapsctl.getPlaceGeom(address)
-
+    address = request.GET.get('address')
+    keyword = request.GET.get('keyword')
+    category = request.GET.get('category')
+    geometry = getPlaceGeom(address)
+    
     #get near place
     if geometry:
-        place_recommend = googlemapsctl.getNearPlaces(geometry, keyword, category)
+        place_recommend =getNearPlaces(geometry, keyword, category)
         return Response(place_recommend, status=200)
     else:
         return Response("Invalid address",status=400) 
@@ -21,8 +24,9 @@ def searchNearPlace(request, address, keyword=None, category=None):
     
 #get place detail info
 @api_view(['GET'])
-def getPlaceDetails(place_id):
-    place_details = googlemapsctl.getPlaceDetails()
+def getPlaceDetail(request):
+    place_id = request.GET.get('place_id')
+    place_details = getPlaceDetails(place_id)
     if place_details:
          return Response(place_details, status=200)
     else:
@@ -31,8 +35,11 @@ def getPlaceDetails(place_id):
 #get route origin to destination
 #origin and destination text are String
 @api_view(['GET'])
-def getPlaceRoutes(origin_text, destination_text):
-    routes = googlemapsctl.getPlaceRoutes(origin_text, destination_text)
+def getPlaceRoute(request):
+    origin_text = request.GET.get('origin_text')
+    destination_text = request.GET.get('destination_text')
+
+    routes = getPlaceRoutes(origin_text, destination_text)
     if routes:
         return Response(routes, status=200)
     else:
