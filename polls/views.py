@@ -10,7 +10,7 @@ API_KEY = settings.API_KEY
 
 @api_view(['GET'])
 def products(request):
-    api_type = request.GET.get('api_type', 'detailPetTour1')
+    api_type = request.GET.get('api_type', 'areaCode1')
 
     if api_type == 'NoticeService2': #외교부 공지사항
         url = 'http://apis.data.go.kr/1262000/NoticeService2/getNoticeList2'
