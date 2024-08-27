@@ -47,7 +47,7 @@ def getNearPlaces(geometry, keyword, category):
     json=json_data)
 
     if response.status_code == 200:
-        return response.json()['suggestions']
+        return response.json()
     else:
         return response.status_code
 
