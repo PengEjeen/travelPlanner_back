@@ -31,7 +31,7 @@ def getNearPlaces(geometry, keyword, category):
         "center": {
             "latitude": geometry["lat"],
             "longitude": geometry["lng"]},
-        "radius": 3000.0               #반경은 0.0 이상 50000.0 이하
+        "radius": 30000.0               #반경은 0.0 이상 50000.0 이하
         }
     }
     

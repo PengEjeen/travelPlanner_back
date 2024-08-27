@@ -9,8 +9,8 @@ from googlectl.googlemapsctl import *
 @api_view(['GET'])
 def searchNearPlace(request):
     #get geom
-    keyword  = ""
-    category = ""
+    keyword  = None
+    category = None
     place_recommend = {"suggestions": []}
 
     address = request.GET.get('address')
