@@ -57,6 +57,8 @@ def getNearPlacesWithText(geometry, keyword):
 
     payload = {
         "textQuery": keyword,
+        "rankPreference": "DISTANCE",
+        "regionCode": "KR",
         #"openNow": True,
         "pageSize": 20,
         "locationBias": {
