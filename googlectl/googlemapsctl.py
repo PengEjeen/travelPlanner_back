@@ -51,6 +51,36 @@ def getNearPlaces(geometry, keyword, category):
     else:
         return response.status_code
 
+def getNearPlacesWithText(geometry, keyword):
+    url = 'https://places.googleapis.com/v1/places:searchText'
+    API_KEY = "AIzaSyA3kdNaHOIsrsRonGCFBfrEPOtn6AezLb0"  # 여기에 API 키를 입력하세요
+
+    payload = {
+        "textQuery": keyword,
+        #"openNow": True,
+        "pageSize": 20,
+        "locationBias": {
+            "circle": {
+                "center": {"latitude": geometry["lat"], 
+                           "longitude": geometry["lng"]},
+                "radius": 500.0
+            }
+        }
+    }
+
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': API_KEY,
+        'X-Goog-FieldMask': 'places.displayName,places'
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+
+    #결과
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return response.status_code
 
 #getPlaceDetails
 def getPlaceDetails(place_id):

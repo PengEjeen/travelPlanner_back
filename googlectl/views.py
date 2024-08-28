@@ -10,18 +10,18 @@ from googlectl.googlemapsctl import *
 def searchNearPlace(request):
     #get geom
     keyword  = None
-    category = None
+#    category = None
     place_recommend = {"suggestions": []}
 
     address = request.GET.get('address')
     keyword = request.GET.get('keyword')
-    category = request.GET.get('category')
+#    category = request.GET.get('category')
     geometry = getPlaceGeom(address)
     
     #get near place
     if geometry:
-        place_recommend =getNearPlaces(geometry, keyword, category)
-        return Response(place_recommend["suggestions"], status=200)
+        place_recommend =getNearPlacesWithText(geometry, keyword)
+        return Response(place_recommend, status=200)
     else:
         return Response("Invalid address",status=400) 
 

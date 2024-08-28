@@ -3,7 +3,10 @@ import json
 
 # 테스트 데이터 설정
 base_url = 'http://34.64.132.0/api'  # API 서버의 기본 URL
+
 #base_url = 'http://127.0.0.1:8000'
+
+
 planner_data = {'user_id': 'Test user', 'title': 'Planner'}
 
 # 플래너 생성 테스트
@@ -26,9 +29,30 @@ def test_get_planner(planner_id):
 
 def test_update_planner(planner_id):
     update_data = {'title': '한국어 테스트'}
+    update_data = {
+        "user_id": "테스트",
+        "title": "안녕 하세요",
+        "cells": [
+        {
+        "day": [
+            {
+            "status": 0,
+            "place_id": "",
+            "memo": ""
+            },
+            {
+            "status": 0,
+            "place_id": "place1",
+            "memo": "Sample memo"
+            }
+        ]
+        }
+  ]
+    }
+
     url = f'{base_url}/planners/{planner_id}/update/'  # 업데이트할 플래너의 URL
     response = requests.put(url, json=update_data)  # PUT 요청을 보냄
-
+    
     # 응답 처리
     if response.status_code == 201:
         print("success ! ! !")
