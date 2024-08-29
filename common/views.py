@@ -33,14 +33,8 @@ class LoginView(generics.GenericAPIView):
         }, status=status.HTTP_200_OK)
 
 
-@api_view(['DELETE'])
-def delete_user_by_username(request):
-    # 'username'을 요청 데이터에서 받아오기
-    username = request.data.get('username')
-
-    if not username:
-        return Response({"error": "Username is required."}, status=status.HTTP_400_BAD_REQUEST)
-
+@api_view(['DELETE'])  ##회원 삭제
+def delete_user_by_username(request, username):
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
@@ -48,7 +42,6 @@ def delete_user_by_username(request):
 
     user.delete()
     return Response({"message": "User account deleted successfully."}, status=status.HTTP_200_OK)
-
 
 
 @api_view(['GET'])  #유저 정보 가져오기
