@@ -5,6 +5,8 @@ from .serializers import RegisterSerializer, LoginSerializer , UsernameRetrieval
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from rest_framework.request import Request
+
 
 
 
@@ -31,14 +33,22 @@ class LoginView(generics.GenericAPIView):
         }, status=status.HTTP_200_OK)
 
 
+@api_view(['DELETE'])
+def delete_user_by_username(request):
+    # 'username'을 요청 데이터에서 받아오기
+    username = request.data.get('username')
 
-class DeleteUserView(generics.DestroyAPIView): #회원 탈퇴
-    permission_classes = [IsAuthenticated]
+    if not username:
+        return Response({"error": "Username is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, *args, **kwargs):
-        user = request.user
-        user.delete()
-        return Response({"message": "User account deleted successfully."}, status=status.HTTP_200_OK)
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    user.delete()
+    return Response({"message": "User account deleted successfully."}, status=status.HTTP_200_OK)
+
 
 
 @api_view(['GET'])  #유저 정보 가져오기
