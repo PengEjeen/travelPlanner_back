@@ -56,23 +56,10 @@ class LoginSerializer(serializers.Serializer):
         raise serializers.ValidationError(
             {"error": "Unable to log in with provided credentials."})
 
-
-
-
-
-
-
 class UserSerializer(serializers.ModelSerializer): #회원정보 보내기
     class Meta:
         model = User
         fields = ('id', 'username', 'email','password')
-
-
-
-
-
-
-
 
 
 class UsernameRetrievalSerializer(serializers.Serializer):  # ID(username) 찾기
