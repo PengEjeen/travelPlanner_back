@@ -55,3 +55,50 @@ class LoginSerializer(serializers.Serializer):
             }
         raise serializers.ValidationError(
             {"error": "Unable to log in with provided credentials."})
+
+
+
+
+
+
+
+class UserSerializer(serializers.ModelSerializer): #회원정보 보내기
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email','password')
+
+
+
+
+
+
+
+
+
+class UsernameRetrievalSerializer(serializers.Serializer):  # ID(username) 찾기
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        if not User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("No user is associated with this email.")
+        return value
+
+    def get_username(self):
+        email = self.validated_data['email']
+        user = User.objects.get(email=email)
+        return user.username
+
+
+
+class PasswordRetrievalSerializer(serializers.Serializer): ##비번찾기
+    username = serializers.CharField(required=True)
+
+    def validate_username(self, value):
+        if not User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("No user is associated with this username.")
+        return value
+
+    def get_password(self):
+        username = self.validated_data['username']
+        user = User.objects.get(username=username)
+        return user.password
