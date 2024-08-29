@@ -53,7 +53,7 @@ def getNearPlaces(geometry, keyword, category):
 
 def getNearPlacesWithText(geometry, keyword):
     url = 'https://places.googleapis.com/v1/places:searchText'
-    API_KEY = "AIzaSyA3kdNaHOIsrsRonGCFBfrEPOtn6AezLb0"  # 여기에 API 키를 입력하세요
+    API_KEY = "AIzaSyDdA-2fIzoAk6uBUpa3kXrBHEfNA-_rDdU"  # 여기에 API 키를 입력하세요
 
     payload = {
         "textQuery": keyword,
