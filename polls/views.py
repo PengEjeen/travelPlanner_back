@@ -10,7 +10,7 @@ API_KEY = settings.API_KEY
 
 @api_view(['GET'])
 def products(request):
-    api_type = request.GET.get('api_type', 'areaCode1')
+    api_type = request.GET.get('api_type', 'searchFestival1')
 
     if api_type == 'NoticeService2': #외교부 공지사항
         url = 'http://apis.data.go.kr/1262000/NoticeService2/getNoticeList2'
@@ -136,7 +136,7 @@ def products(request):
         url = 'http://apis.data.go.kr/B551011/KorService1/searchFestival1'
         params = {
             'serviceKey': API_KEY,
-            'numOfRows': '20',
+            'numOfRows': '10000',
             'pageNo': '1',
             '_type':'json',
             'MobileOS': 'ETC',
@@ -187,8 +187,13 @@ def products(request):
             'contentId': '2674675',
             'contentTypeId': '15'
         }
-    elif api_type == 'detailInfo1':  # 반복정보조회 ##추가 관광정보 상세내역을 조회한다. 상세반복정보를 안내URL의 국문관광정보 상세 매뉴얼 문서를 참고하시기 바랍니다.
+    elif api_type == 'detailInfo1':  # 반복정보조회
         url = 'http://apis.data.go.kr/B551011/KorService1/detailInfo1'
+
+        content_id = request.GET.get('contentId')
+        if not content_id:
+            return Response({'error': 'contentId is required'}, status=status.HTTP_400_BAD_REQUEST)
+
         params = {
             'serviceKey': API_KEY,
             'numOfRows': '20',
@@ -196,7 +201,7 @@ def products(request):
             '_type': 'json',
             'MobileOS': 'ETC',
             'MobileApp': 'AppTest',
-            'contentId': '2674675',
+            'contentId': content_id,
             'contentTypeId': '15'
         }
     elif api_type == 'detailImage1':  #이미지정보조회 ##관광정보에 매핑되는 서브이미지목록 및 이미지 자작권 공공누리유형을 조회하는 기능
