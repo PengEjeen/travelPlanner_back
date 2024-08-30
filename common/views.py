@@ -8,8 +8,6 @@ from rest_framework.views import APIView
 from rest_framework.request import Request
 
 
-
-
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
@@ -80,3 +78,35 @@ class PasswordRetrievalView(APIView): ##비번찾기
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['PUT'])
+def update_user_info(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    data = request.data.get('myInfo', {})
+
+
+    revise_user_id = data.get('reviseUserId')
+    revise_password = data.get('revisePassword')
+    revise_email = data.get('reviseEmail')
+
+
+    if revise_user_id:
+        user.username = revise_user_id
+
+
+    if revise_password:
+        user.set_password(revise_password)
+
+
+    if revise_email:
+        user.email = revise_email
+
+    # 변경된 정보 저장
+    user.save()
+
+
+    return Response({"message": "User information updated successfully."}, status=status.HTTP_200_OK)
