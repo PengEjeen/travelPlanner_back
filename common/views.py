@@ -86,9 +86,8 @@ def update_user_info(request, username):
     except User.DoesNotExist:
         return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
-    data = request.data.get('myInfo', {})
-
-
+    #data = request.data.get('myInfo', {})
+    data = request.data['body']['myInfo']
     revise_user_id = data.get('reviseUserId')
     revise_password = data.get('revisePassword')
     revise_email = data.get('reviseEmail')
@@ -97,16 +96,14 @@ def update_user_info(request, username):
     if revise_user_id:
         user.username = revise_user_id
 
-
     if revise_password:
         user.set_password(revise_password)
 
-
     if revise_email:
         user.email = revise_email
-
+        
     # 변경된 정보 저장
     user.save()
 
 
-    return Response({"message": "User information updated successfully."}, status=status.HTTP_200_OK)
+    return Response({"message": f"User information updated successfully.\n{user}\n{revise_user_id}, {revise_password}, {revise_email}, {data}, {request.data}"}, status=status.HTTP_200_OK)
