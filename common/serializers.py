@@ -21,6 +21,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password', 'password2', 'email')
 
+
     def validate(self, data):
         if data['password'] != data['password2']:
             raise serializers.ValidationError(
@@ -28,6 +29,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
+        validated_data.pop('password2')
+
+
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
@@ -35,8 +39,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         user.set_password(validated_data['password'])
         user.save()
+
         token = Token.objects.create(user=user)
         return user
+
 
 
 
