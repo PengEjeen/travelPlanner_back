@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import generics, status
 from rest_framework.response import Response
-from .serializers import RegisterSerializer, LoginSerializer , UsernameRetrievalSerializer , UserSerializer ,PasswordRetrievalSerializer
+from .serializers import RegisterSerializer, LoginSerializer, UsernameRetrievalSerializer, UserSerializer, \
+    PasswordRetrievalSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
@@ -20,7 +21,6 @@ class LoginView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         validated_data = serializer.validated_data
-
 
         token = validated_data['token']
         user = validated_data['user']
@@ -42,7 +42,7 @@ def delete_user_by_username(request, username):
     return Response({"message": "User account deleted successfully."}, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])  #유저 정보 가져오기
+@api_view(['GET'])  # 유저 정보 가져오기
 def get_user_info(request, username):
     try:
 
@@ -52,7 +52,6 @@ def get_user_info(request, username):
         return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = UserSerializer(user)
-
 
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -68,7 +67,7 @@ class UsernameRetrievalView(APIView):  # ID 찾기
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class PasswordRetrievalView(APIView): ##비번찾기
+class PasswordRetrievalView(APIView):  ##비번찾기
     def post(self, request):
         serializer = PasswordRetrievalSerializer(data=request.data)
 
@@ -86,21 +85,17 @@ def update_user_info(request, username):
     except User.DoesNotExist:
         return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
-    data = request.data.get('myInfo', {})
-
-
+    # data = request.data.get('myInfo', {})
+    data = request.data['body']['myInfo']
     revise_user_id = data.get('reviseUserId')
     revise_password = data.get('revisePassword')
     revise_email = data.get('reviseEmail')
 
-
     if revise_user_id:
         user.username = revise_user_id
 
-
     if revise_password:
         user.set_password(revise_password)
-
 
     if revise_email:
         user.email = revise_email
@@ -108,5 +103,6 @@ def update_user_info(request, username):
     # 변경된 정보 저장
     user.save()
 
-
-    return Response({"message": "User information updated successfully."}, status=status.HTTP_200_OK)
+    return Response({
+                        "message": f"User information updated successfully.\n{user}\n{revise_user_id}, {revise_password}, {revise_email}, {data}, {request.data}"},
+                    status=status.HTTP_200_OK)

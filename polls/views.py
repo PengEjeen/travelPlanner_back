@@ -10,7 +10,7 @@ API_KEY = settings.API_KEY
 
 @api_view(['GET'])
 def products(request):
-    api_type = request.GET.get('api_type', 'searchFestival1')
+    api_type = request.GET.get('api_type', 'CountryFlagService2')
 
     if api_type == 'NoticeService2': #외교부 공지사항
         url = 'http://apis.data.go.kr/1262000/NoticeService2/getNoticeList2'
@@ -53,7 +53,7 @@ def products(request):
         url = 'http://apis.data.go.kr/1262000/CountryFlagService2/getCountryFlagList2'
         params = {
             'serviceKey': API_KEY,
-            'numOfRows': '20',
+            'numOfRows': '10000',
             'pageNo': '1'
         }
     elif api_type == 'SptravelWarningService2':  # 외교부_국가∙지역별 특별여행주의보
