@@ -3,7 +3,7 @@ from googlemaps import Client
 import json
 import requests
 
-API_KEY = "AIzaSyA3kdNaHOIsrsRonGCFBfrEPOtn6AezLb0"
+API_KEY = "AIzaSyDdA-2fIzoAk6uBUpa3kXrBHEfNA-_rDdU"
 
 client = Client(key=API_KEY)
 
